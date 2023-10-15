@@ -20,9 +20,13 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
+    - name: Restore Dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Integration Tests
-      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-build --logger "console;verbosity=detailed"
+    - name: Unit Tests Debug
+      run: dotnet test ./tests/FileDiff.UnitTests/FileDiff.UnitTests.csproj --no-restore -c Debug --verbosity normal
+    - name: Integration Tests Debug
+      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Debug --verbosity normal
+    - name: Integration Tests Release
+      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Release --verbosity normal
