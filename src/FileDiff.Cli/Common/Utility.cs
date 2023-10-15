@@ -9,6 +9,13 @@ namespace Patterns;
 public static class Utility
 {
     private const string _patchRegex = @"^\[(?<action>[AR])\]\s'(?<line>\d+)' - (?<content>.*)$";
+
+    /// <summary>
+    /// Calculates the Levenshtein distance between two strings.
+    /// </summary>
+    /// <param name="a">The first string to compare.</param>
+    /// <param name="b">The second string to compare.</param>
+    /// <returns>The Levenshtein distance between the two strings.</returns>
     public static int Levenshtein(string a, string b)
     {
         int result = 0;
@@ -51,6 +58,12 @@ public static class Utility
         }
         return result;
     }
+
+    /// <summary>
+    /// Suggests a command based on the user input by calculating the Levenshtein distance between the user input and available commands.
+    /// </summary>
+    /// <param name="command">The user input command.</param>
+    /// <param name="sb">The StringBuilder instance to append the suggestion message.</param>
     public static void SuggestCommand(string command, StringBuilder sb)
     {
         var suggestions = Command.GetCommands().Select(c => c.Run).ToList();
@@ -194,6 +207,11 @@ public static class Utility
         }
     }
 
+    /// <summary>
+    /// Applies a patch file to a target file, modifying the target file according to the instructions in the patch file.
+    /// </summary>
+    /// <param name="patchPath">The path to the patch file.</param>
+    /// <param name="targetPath">The path to the target file.</param>
     public static void PatchCommand(string patchPath, string targetPath)
     {
         var lines = File.ReadAllLines(targetPath).ToList();
@@ -231,11 +249,18 @@ public static class Utility
             {
                 if (item.Action == Actions.ADD)
                 {
-                    lines[item.Line - 1] = item.Content;
+                    if (item.Line == lines.Count + 1)
+                    {
+                        lines.AddRange(new[] { item.Content });
+                    }
+                    else
+                    {
+                        lines.Insert(item.Line - 1, item.Content);
+                    }
                 }
                 else if (item.Action == Actions.REMOVE)
                 {
-                    lines[item.Line - 1] = String.Empty;
+                    lines.RemoveAt(item.Line - 1);
                 }
             }
             File.WriteAllLines(targetPath, lines);
