@@ -63,8 +63,14 @@ public static class Utility
                 sb.Append($"    Did you mean '{suggestion}'?");
             }
         }
+        if (sb.Length == 0)
+        {
+            sb.AppendLine($"Command '{command}' not found.");
+            sb.Append("Run 'dotnet run help' for usage.");
+        }
         Console.WriteLine(sb.ToString());
     }
+
     /// <summary>
     /// Calculates the Levenshtein distance between two strings and generates a list of patches to transform string a into string b.
     /// </summary>

@@ -34,8 +34,27 @@ public class UtilityTests
 
         // Act
         Utility.SuggestCommand(command, sb);
-        var capturedOutput = outputCapture.GetCapturedOutput();
+
         // Assert
+        var capturedOutput = outputCapture.GetCapturedOutput();
+        capturedOutput.Should().Contain(expectedSuggestion);
+    }
+
+    [Fact]
+    public void SuggestCommand_ReturnsHelpfulMessage()
+    {
+        // Arrange
+        const string command = "unrecognizedcommand";
+        const string expectedSuggestion = $"Command '{command}' not found";
+        var sb = new StringBuilder();
+        using var outputCapture = new ConsoleOutputCapture();
+
+        // Act
+        Utility.SuggestCommand(command, sb);
+
+        // Assert
+        var capturedOutput = outputCapture.GetCapturedOutput();
+        capturedOutput.Should().NotBeNullOrWhiteSpace();
         capturedOutput.Should().Contain(expectedSuggestion);
     }
 }

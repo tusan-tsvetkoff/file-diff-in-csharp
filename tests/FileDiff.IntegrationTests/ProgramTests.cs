@@ -45,7 +45,7 @@ public class ProgramTests
     }
 
     [Fact]
-    public void Program_Main_UnrecognizedCommand_ShowsErrorMessage()
+    public void Program_Main_UnrecognizedCommand_ShowsUsageMessage()
     {
         // Arrange
         string commandLine = "unknowncommand";
@@ -57,6 +57,8 @@ public class ProgramTests
 
         // Assert
         string capturedOutput = outputCapture.GetCapturedOutput();
-        string.IsNullOrWhiteSpace(capturedOutput).Should().BeTrue();
+        capturedOutput.Should().NotBeNullOrWhiteSpace();
+        capturedOutput.Should().Contain($"Command '{commandLine}' not found.");
+        capturedOutput.Should().Contain(commandLine);
     }
 }

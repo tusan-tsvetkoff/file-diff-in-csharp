@@ -23,7 +23,8 @@ public readonly record struct Command
         {
             _diff,
             _patch,
-            _help
+            _help,
+            _list
         };
 
     public static Command GetCommand(string command) =>
@@ -86,7 +87,4 @@ public readonly record struct Command
         }
         Console.WriteLine(sb.ToString());
     }
-
-    public override string ToString() =>
-        $"{Run} {Args} {Description}";
 }
