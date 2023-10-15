@@ -25,8 +25,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Unit Tests Debug
-      run: dotnet test ./tests/FileDiff.UnitTests/FileDiff.UnitTests.csproj --no-restore -c Debug --verbosity normal
+      run: dotnet test ./tests/FileDiff.UnitTests/FileDiff.UnitTests.csproj --no-restore -c Debug --verbosity normal --collect:"XPlat Code Coverage"
     - name: Integration Tests Debug
-      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Debug --verbosity normal
+      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Debug --verbosity normal --collect:"XPlat Code Coverage" 
     - name: Integration Tests Release
-      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Release --verbosity normal
+      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-restore -c Release --verbosity normal --collect:"XPlat Code Coverage"
