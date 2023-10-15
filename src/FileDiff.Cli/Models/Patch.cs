@@ -1,3 +1,6 @@
+using Patterns.Enums;
+using Patterns.Extensions;
+
 namespace Patterns;
 
 public readonly record struct Patch

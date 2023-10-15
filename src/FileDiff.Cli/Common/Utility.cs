@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using Patterns.Common;
+using Patterns.Enums;
 using Patterns.Extensions;
 
 namespace Patterns;

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Patterns\Patterns.csproj" />
+    <ProjectReference Include="..\..\src\FileDiff.Cli\FileDiff.Cli.csproj" />
   </ItemGroup>
 
 </Project>

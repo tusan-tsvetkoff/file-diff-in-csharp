@@ -1,16 +1,11 @@
-namespace Patterns;
+using Patterns.Enums;
 
-public enum Actions
-{
-    IGNORE = 1,
-    MODIFY,
-    ADD,
-    REMOVE
-}
+namespace Patterns.Extensions;
 
 public static class ActionsExtensions
 {
     public static string ToSymbol(this Actions action) =>
+
         action switch
         {
             Actions.IGNORE => " ",
@@ -43,4 +38,3 @@ public static class ActionsExtensions
     public static byte ToByte(this string line) =>
         byte.Parse(line);
 }
-
