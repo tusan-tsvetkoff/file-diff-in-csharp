@@ -1,4 +1,4 @@
-                [![codecov](https://codecov.io/gh/tusan-tsvetkoff/file-diff-in-csharp/graph/badge.svg?token=U7GFT2VE4V)](https://codecov.io/gh/tusan-tsvetkoff/file-diff-in-csharp)
+[![codecov](https://codecov.io/gh/tusan-tsvetkoff/file-diff-in-csharp/graph/badge.svg?token=U7GFT2VE4V)](https://codecov.io/gh/tusan-tsvetkoff/file-diff-in-csharp)
 
 # File Diff CLI tool in C#
 
