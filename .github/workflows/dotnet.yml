@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Integration Tests
-      run: dotnet test FileDiff.IntegrationTests --no-build --logger "console;verbosity=detailed"
+      run: dotnet test ./tests/FileDiff.IntegrationTests/FileDiff.IntegrationTests.csproj --no-build --logger "console;verbosity=detailed"
