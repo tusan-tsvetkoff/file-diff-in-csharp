@@ -1,8 +1,6 @@
-﻿using System.Net.Security;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
+using Patterns.Common;
 using Patterns.Extensions;
 
 namespace Patterns;
@@ -67,6 +65,12 @@ public static class Utility
         }
         Console.WriteLine(sb.ToString());
     }
+    /// <summary>
+    /// Calculates the Levenshtein distance between two strings and generates a list of patches to transform string a into string b.
+    /// </summary>
+    /// <param name="a">The first string to compare.</param>
+    /// <param name="b">The second string to compare.</param>
+    /// <param name="filePatch">The list of patches to transform string a into string b.</param>
     public static void Levenshtein(string a, string b, out List<Patch> filePatch)
     {
         var sourceLines = File.ReadAllLines(a).ToList();
@@ -129,6 +133,7 @@ public static class Utility
             }
         }
         GetPatch(a, b, actions, sourceLength, targetLength, targetLines, sourceLines, out filePatch);
+        // uncomment to trace cache in console
         // TraceCache(distances, actions);
     }
 
@@ -170,15 +175,15 @@ public static class Utility
             }
         }
         filePatch = patch;
-        TracePatch(patch, a, b);
+        TraceDiff(patch, a, b);
     }
 
     public static void CreatePatchFile(List<Patch> filePatch)
     {
         using var sw = new StreamWriter("file.patch");
-        foreach (var item in filePatch)
+        foreach (var line in filePatch)
         {
-            sw.WriteLine(item.ToString());
+            sw.WriteLine(line.ToString());
         }
     }
 
@@ -190,16 +195,16 @@ public static class Utility
         bool ok = true;
         foreach (var patchLine in patchLines)
         {
-            if (String.IsNullOrWhiteSpace(patchLine))
+            if (String.IsNullOrWhiteSpace(patchLine) || !patchLine.StartsWith('['))
             {
                 continue;
             }
 
             var match = Regex.Match(patchLine, _patchRegex);
 
-            if (!match.Success || !match.Groups["action"].Success)
+            if (!match.Success || !match.Groups[ActionGroups.Action].Success)
             {
-                Console.WriteLine($"Invalid patch action: '{patchLine}'");
+                Console.WriteLine($"{General.InvalidPatchAction} '{patchLine}'");
                 ok = false;
                 continue;
             }
@@ -207,9 +212,9 @@ public static class Utility
             {
                 break;
             }
-            var action = match.Groups["action"].Value;
-            var line = match.Groups["line"].Value;
-            var content = match.Groups["content"].Value;
+            var action = match.Groups[ActionGroups.Action].Value;
+            var line = match.Groups[ActionGroups.Line].Value;
+            var content = match.Groups[ActionGroups.Content].Value;
             patch.Add(Patch.Create(action.ToAction(), line.ToByte(), content));
         }
 
@@ -230,7 +235,7 @@ public static class Utility
         }
     }
 
-    private static void TracePatch(List<Patch> patch, string sourceFile, string targetFile)
+    private static void TraceDiff(List<Patch> patch, string sourceFile, string targetFile)
     {
         patch.Reverse();
 

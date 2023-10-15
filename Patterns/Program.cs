@@ -27,7 +27,10 @@ public class Program
                 {
                     command = new CmdHelpCommand(args[0]);
                 }
-                command = new UnrecognizedCommand(args[0]);
+                else
+                {
+                    command = new UnrecognizedCommand(args[0]);
+                }
                 break;
             case 3:
                 command = args[0].ToCommand() switch

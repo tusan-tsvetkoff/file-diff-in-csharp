@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Patterns;
@@ -40,7 +39,7 @@ public readonly record struct Command
     private static void HelpConstruct(StringBuilder sb)
     {
         sb.AppendLine();
-        sb.AppendLine(Constants.Usage);
+        sb.AppendLine(General.Usage);
         sb.AppendLine();
         sb.AppendLine("Commands:");
         sb.AppendLine($"  {_diff.Run} {_diff.Args}  {_diff.Description}");
