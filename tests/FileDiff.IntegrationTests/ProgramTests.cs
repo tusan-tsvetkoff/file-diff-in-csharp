@@ -56,6 +56,26 @@ public class ProgramTests
         File.Delete(tempPath);
     }
 
+    [Theory]
+    [InlineData("diff")]
+    [InlineData("patch")]
+    public void Program_Main_CmdHelpCommand_ShowsCorrectHelp(string cmd)
+    {
+        // Arrange
+        const string help = "help";
+        var commandLine = new string[] { cmd, help };
+        var sb = new StringBuilder();
+        using var outputCapture = new ConsoleOutputCapture();
+
+        // Act
+        Program.Main(commandLine);
+
+        // Assert
+        string capturedOutput = outputCapture.GetCapturedOutput();
+        capturedOutput.Should().NotBeNullOrWhiteSpace();
+        capturedOutput.Should().Contain($"Usage: dotnet run {cmd}");
+    }
+
     [Fact]
     public void Program_Main_HelpCommand_DisplaysHelp()
     {
@@ -110,5 +130,23 @@ public class ProgramTests
         capturedOutput.Should().NotBeNullOrWhiteSpace();
         capturedOutput.Should().Contain($"Command '{commandLine}' not found.");
         capturedOutput.Should().Contain(commandLine);
+    }
+
+    [Fact]
+    public void Program_Main_NullCommand_ShowsFullHelp()
+    {
+        // Arrange
+        var args = Array.Empty<string>();
+        var sb = new StringBuilder();
+        using var outputCapture = new ConsoleOutputCapture();
+
+        // Act
+        Program.Main(args);
+
+        // Assert
+        string capturedOutput = outputCapture.GetCapturedOutput();
+        capturedOutput.Should().NotBeNullOrWhiteSpace();
+        capturedOutput.Should().Contain("Usage: dotnet run [command] [arguments]");
+        capturedOutput.Should().Contain("Commands:");
     }
 }
