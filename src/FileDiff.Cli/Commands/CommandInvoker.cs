@@ -1,4 +1,6 @@
 using Patterns.Abstractions;
+using Patterns.Enums;
+using Patterns.Extensions;
 
 namespace Patterns.Commands;
 
