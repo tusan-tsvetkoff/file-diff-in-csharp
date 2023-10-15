@@ -8,7 +8,7 @@ namespace Patterns;
 public class Program
 {
     private static readonly StringBuilder sb = new();
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         var invoker = new CommandInvoker();
         ICommand command = new NullCommand();
