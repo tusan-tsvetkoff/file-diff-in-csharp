@@ -1,5 +1,7 @@
 # File Diff CLI tool in C#
 
+**!FOR EDUCATIONAL PURPOUSES ONLY!**
+
 This is a utility command line tool that compares two files and shows the differences between them. It is extremely simple and currently only supports comparing two files line by line, with the ability to turn one file into the other by adding, removing, or changing lines. (*it essentially only removes lines and adds others in their place*)
 
 Entirely inspired by [tsoding](https://github.com/tsoding).
